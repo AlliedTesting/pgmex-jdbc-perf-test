@@ -1,0 +1,9 @@
+function SInput=patch_005_performance_testing(~,SInput)
+SInput.performanceTestingParams=struct();
+SInput.performanceTestingParams.minNumOfTuples=NaN; % determine automatically basing on number of points
+SInput.performanceTestingParams.maxNumOfTuples=NaN; % determine automatically basing on number of points
+SInput.performanceTestingParams.nTuplesSamples=20;
+SInput.performanceTestingParams.nTrialsPerSample=3;
+SInput.performanceTestingParams.maxExecTimeInSecs=180;
+SInput.performanceTestingParams.pathToSaveTestData=''; % current path
+SInput.performanceTestingParams.pathToSaveFigures=''; % current path

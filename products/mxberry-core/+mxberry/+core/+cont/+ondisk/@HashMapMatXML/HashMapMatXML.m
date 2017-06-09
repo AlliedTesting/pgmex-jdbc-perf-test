@@ -1,0 +1,122 @@
+classdef HashMapMatXML<mxberry.core.cont.ondisk.AHashMap
+    %DISKBASEDHASHMAP represents a hash map for the arbitrary objects on disk
+    % with a high level of persistency when the object state can be
+    % restored based only on a storage location
+    
+    properties (Constant,GetAccess=protected)
+        MAT_EXTENSION='mat';
+        XML_EXTENSION='xml';
+        IGNORE_EXTENSIONS={'asv','xml~'};
+        ALLOWED_EXTENSIONS={'mat','xml'};
+    end
+    methods
+        function self=HashMapMatXML(varargin)
+            % DISKBASEDHASHMAP creates a hash map object
+            %
+            % Usage: self=DiskBasedHashMap() or
+            %        self=DynamicRelation(varargin)
+            %
+            % Input:
+            %   properties:
+            %       optional:
+            %            storageLocationRoot: char[1,nChars1] - storage location
+            %
+            %            storageBranchKey: char[1,nChars2] - a key used for
+            %               generating a final storageLocation
+            %
+            %            ignorePutErrors: logical[1,1] - if true all put
+            %               errors are ignored (default is false)
+            %
+            %            ignoreBrokenStoredValues: logical [1,1] - if true
+            %               all broken stored values are considered to be
+            %               absent (default is false)
+            %
+            %            storageFormat: char[1,] - can have the following
+            %               values
+            %                   'mat' (default) - use mat files for storing
+            %                       the values
+            %                   'xml' - use xml files
+            %
+            %                   'none' - do not store files at all i.e.
+            %                      skip all put operations
+            %
+            %            useHashedPath: logical[1,1] - if true (default), branch
+            %               paths are hashed to limit their length
+            %
+            %            useHashedKeys: logical[1,1] -if true (default)
+            %               file names are based on not-hashed keys to
+            %                  improve a file name readability
+            %
+            % Output:
+            %   regular:
+            %     self: DiskBasedHashMap [1,1] - constructed class object
+            %
+            %
+            %            % $Author: Peter Gagarinov, PhD <pgagarinov@gmail.com> $
+            % $Copyright: 2015-2016 Peter Gagarinov, PhD
+            %             2015 Moscow State University
+            %            Faculty of Computational Mathematics and Computer Science
+            %            System Analysis Department$
+            %
+            %
+            import mxberry.core.cont.DiskBasedHashMap;
+            import mxberry.core.throwerror;
+            import mxberry.xml.*;
+            import mxberry.core.parseparext;
+            %
+            self=self@mxberry.core.cont.ondisk.AHashMap(varargin{:});
+            %
+            [~,~,self.storageFormat]=parseparext(varargin,...
+                {'storageFormat';self.storageFormat;'isstring(x)'});
+            %
+            switch lower(self.storageFormat)
+                case 'mat'
+                    self.saveFunc=@save;
+                    self.loadKeyFunc=@(x)load(x,'keyStr');
+                    self.loadValueFunc=@(x)load(x,'valueObj');
+                    self.fileExtension=self.MAT_EXTENSION;
+                    self.isMissingKeyBlamed=true;
+                case 'xml'
+                    self.saveFunc=@(x,y,z)xmlsave(x,...
+                        struct(...
+                        'valueObj',{evalin('caller',y)},...
+                        'keyStr',{evalin('caller',z)}),...
+                        'on');
+                    self.loadKeyFunc=@xmlload;
+                    self.loadValueFunc=@xmlload;
+                    self.fileExtension=self.XML_EXTENSION;
+                    self.isMissingKeyBlamed=true;
+                case 'none'
+                otherwise
+                    throwerror('wrongInput','unknown storage format');
+            end
+        end
+        %
+    end
+    methods (Access=protected)
+        function valueObj=getOne(self,keyStr)
+            import mxberry.core.throwerror;
+            WARN_TO_CATCH='badMatFile:wrongState';
+            lastwarn('');
+            valueObj=getOne@mxberry.core.cont.ondisk.AHashMap(self,keyStr);
+            [lastWarnMsg,lastWarnId]=lastwarn();
+            nChars=length(WARN_TO_CATCH);
+            nWarnChars=length(lastWarnId);
+            indStart=max(1,nWarnChars-nChars)+1;
+            if strcmp(lastWarnId(indStart:end),WARN_TO_CATCH)
+                throwerror('wrongState',lastWarnMsg);
+            end
+        end
+        function [isPositive,keyStr]=checkKey(self,fileName)
+            isPositive=mxberry.io.isfile(fileName);
+            if ~((strcmp(self.fileExtension,self.XML_EXTENSION))&&...
+                    (nargout<2))
+                if isPositive
+                    [isPositive,keyStr]=...
+                        checkKey@mxberry.core.cont.ondisk.AHashMap(...
+                        self,fileName);
+                end
+            end
+        end
+    end
+end

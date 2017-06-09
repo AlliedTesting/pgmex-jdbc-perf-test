@@ -1,0 +1,12 @@
++mxberry/+conf/+test/@AdaptiveConfRepoManagerTest/confrepo/*
++mxberry/+conf/+test/@ConfRepoMgrAdv/confrepo/*
++mxberry/+conf/+test/@VersionedConfRepoManagerTest/confRepoVersioned/*
++mxberry/+conf/+test/@VersionedConfRepoManagerTest/confRepoVersioned/_templates/testConfCK.xml
++mxberry/+conf/+test/@VersionedConfRepoManagerTest/confrepo/*
++mxberry/+conf/+test/confrepo/*
++mxberry/+conf/+test/@AdpConfRepoMgr/confrepo
++mxberry/+conf/+test/@AdaptiveConfRepoMgrNanVer/confrepo/*
+!+mxberry/+conf/+test/@AdaptiveConfRepoMgrNanVer/confrepo/_templates
++mxberry/+conf/+test/@ConfigurationRMTest/confrepo
+!+mxberry/+test/+conf/confrepo/_templates
++mxberry/+test/+conf/confrepo/*

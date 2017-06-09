@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<root version="8" xml_tb_version="2.0" type="struct" >
+<valueObj type="struct" >
+	<database type="struct" >
+		<connectionString type="char" >host=localhost dbname=postgres port=5432 user=postgres password=mypassword</connectionString>
+	</database>
+	<logging type="struct" >
+		<log4jSettings type="char" >
+			log4j.rootLogger=DEBUG, stdout, A1
+			#
+			log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+			log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+			#
+			log4j.appender.stdout.layout.ConversionPattern=%5p %c - %m\n
+			#
+			log4j.appender.A1=org.apache.log4j.FileAppender
+			#
+			#do not change - name of the main log file should have a 
+			#fixed pattern so that email logger can pick it up
+			log4j.appender.A1.File=${com.allied.pgmex.testrunner.log4j.logfile.dirwithsep}${com.allied.pgmex.testrunner.log4j.logfile.main.name}
+			#
+			log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+			log4j.appender.A1.layout.ConversionPattern=%d %5p %c - %m%n
+		</log4jSettings>
+	</logging>
+	<executionControl type="struct" >
+		<nParallelProcesses type="double" >1</nParallelProcesses>
+		<parallelConfiguration type="char" >local</parallelConfiguration>
+	</executionControl>
+	<reporting type="struct" >
+		<JUnitXMLReport type="struct" >
+			<isEnabled type="logical" >1</isEnabled>
+			<dirNameByTheFollowingFile type="char" size="0 0"/>
+			<dirNameSuffix type="char" size="0 0"/>
+		</JUnitXMLReport>
+	</reporting>
+	<performanceTestingParams type="struct" >
+		<maxExecTimeInSecs type="double" >180</maxExecTimeInSecs>
+		<pathToSaveTestData type="char" size="0 0"/> 
+		<pathToSaveFigures type="char" size="0 0"/> 
+		<raiseExceptionIfError type="logical" >1</raiseExceptionIfError>
+		<saveFiguresInTests type="logical" >1</saveFiguresInTests>
+		<singleExpRunFuncName type="char" >runsingleexperiment</singleExpRunFuncName>
+		<testModeName type="char" >all</testModeName>
+		<samplesMeshModeName type="char" >uniform</samplesMeshModeName>
+		<samplesMeshModeProps type="struct" >
+			<uniform type="struct" >
+				<minNumOfTuples type="double" >NaN</minNumOfTuples>
+				<maxNumOfTuples type="double" >1500</maxNumOfTuples>
+				<nTuplesSamples type="double" >20</nTuplesSamples>
+			</uniform>
+			<manual type="struct" >
+				<nTuplesVec type="double" >20000 40000 60000</nTuplesVec>
+			</manual>
+		</samplesMeshModeProps>
+		<nTrialsPerSample type="double" >3</nTrialsPerSample>
+	</performanceTestingParams>
+</valueObj>
+<keyStr type="char" >default</keyStr>
+</root>
