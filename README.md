@@ -1,6 +1,6 @@
 PgMex-JDBC Performance Tests
 ------------
-test suite was developed to compare performance of [**PgMex library**](http://pgmex.alliedtesting.com) and of
+The test suite was developed to compare performance of [**PgMex library**](http://pgmex.alliedtesting.com) and of
 **Matlab Database Toolbox** working via a direct JDBC connection.
 
 Currently tests cover performance for different methods of inserting and types of data to be inserted. The results
@@ -8,7 +8,7 @@ of experiments obtained through this suite can be seen [here](https://pgagarinov
 
 Features
 ------------
-Test suite can launch tests for different testing modes and output test results as graphs depicting performance of respective connectors for various data volumes.
+The test suite can launch tests for different testing modes and output test results as graphs depicting performance of respective connectors for various data volumes.
 
 This suite is fully configurable through a special xml file that may be easily edited.
 
