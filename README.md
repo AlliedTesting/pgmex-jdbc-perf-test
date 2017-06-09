@@ -4,7 +4,7 @@ The test suite was developed to compare performance of [**PgMex library**](http:
 **Matlab Database Toolbox** working via a direct JDBC connection.
 
 Currently tests cover performance for different methods of inserting and types of data to be inserted. The results
-of experiments obtained through this suite can be seen [here](https://pgagarinov.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/).
+of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/).
 
 Features
 ------------
@@ -132,7 +132,7 @@ while in case `testModeName` equals `pgmex` or `all` you should have a non-trial
 Let us now describe each mode for generation of sample meshes determining volumes of data used in experiments. Each sample is determined by
 number of tuples for input test data. Test data values are taken from a special mat file (see the section
 "Experiment conditions for comparison between **Matlab Database Toolbox** and [**PgMex**](http://pgmex.alliedtesting.com)"
-[here](https://pgagarinov.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/) if you are interested in understanding the nature of this data set). In case a required number of test data tuples exceeds the number of tuples in the
+[here](https://alliedtesting.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/) if you are interested in understanding the nature of this data set). In case a required number of test data tuples exceeds the number of tuples in the
 mentioned mat file, this input data is simply replicated as many times as necessary to build a sufficiently large data set.
 
 
@@ -198,7 +198,7 @@ In conclusion let us consider a couple of examples that demonstrate a usage of t
 Need Help? Found a bug?
 --------------------
 
-[Submit an issue](https://github.com/pgagarinov/pgmex-jdbc-perf-test/issues) to the PgMex-JDBC Performance Tests Github if you need any help.
+[Submit an issue](https://github.com/AlliedTesting/pgmex-jdbc-perf-test/issues) to the PgMex-JDBC Performance Tests Github if you need any help.
 And, of course, feel free to submit pull requests with bug fixes or changes.
 
 
