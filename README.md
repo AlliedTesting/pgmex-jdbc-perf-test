@@ -121,8 +121,7 @@ pathToSaveFigures| path for storing figures with graphs depicting results of tes
 raiseExceptionIfError| in case of an error during execution for some test raiseExceptionIfError=1 raises an exception thus stopping execution of current test; raiseExceptionIfError=0 displays a warning and tries to continue a test execution
 saveFiguresInTests| determines whether figures with graphs with test results are created (if saveFiguresInTests=0, only mat files with results of experiments are created)
 singleExpRunFuncName| function name for executing single experiments,this parameter should not be changed
-testModeName|
-can be `jdbc`, `pgmex` or `all`; `jdbc` turns testing only for **MathWorks Database Toolbox** working via a direct JDBC connection are tested,  `pgmex` – only for methods of [**PgMex library**](http://pgmex.alliedtesting.com), `all` runs tests for both connectors
+testModeName|can be `jdbc`, `pgmex` or `all`; `jdbc` turns testing only for **MathWorks Database Toolbox** working via a direct JDBC connection are tested,  `pgmex` – only for methods of [**PgMex library**](http://pgmex.alliedtesting.com), `all` runs tests for both connectors
 samplesMeshModeName| defines an algorithm used for generating a vector with different numbers of test data tuples used in each particular experiment, may be uniform or manual (see their description below)
 samplesMeshModeProps| parameters for all modes for generating a vector with different numbers of test data tuples used in each particular experiment (see below their description)
 nTrialsPerSample| number of trials for each single experiment to measure time of its execution (the final values are avarages across all trials)
