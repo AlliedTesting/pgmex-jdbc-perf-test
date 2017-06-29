@@ -4,7 +4,7 @@ The test suite was developed to compare performance of [**PgMex library**](http:
 **Matlab Database Toolbox** working via a direct JDBC connection.
 
 Currently tests cover performance for different methods of inserting and types of data to be inserted. The results
-of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/).
+of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017/06/29/performance-comparison-of-postgresql-connectors-in-matlab-part-I/).
 
 Features
 ------------
@@ -71,7 +71,7 @@ Configuring of Tests
 -------------------------
 
 Test suite is configured by plain xml files for easier editing and scm system integration. Please note that
-configuration files are located computer-specific directories.
+configuration files are located at computer-specific directories.
 Thus there can be multiple instance of configuration `default`, each stored in a folder matching a specific
 computer name. Also, apart from computer-specific folders there is a folder that contains
 so-called *templates*. Template is a configuration that is then *deployed* to a computer-specific folder and then
@@ -120,11 +120,11 @@ pathToSaveTestData|path for storing test experiment results into mat files (late
 pathToSaveFigures| path for storing figures with graphs depicting results of test experiments; if empty, current folder is used
 raiseExceptionIfError| in case of an error during execution for some test raiseExceptionIfError=1 raises an exception thus stopping execution of current test; raiseExceptionIfError=0 displays a warning and tries to continue a test execution
 saveFiguresInTests| determines whether figures with graphs with test results are created (if saveFiguresInTests=0, only mat files with results of experiments are created)
-singleExpRunFuncName| function name for executing single experiments,this parameter should not be changed
+singleExpRunFuncName| function name for executing single experiments, this parameter should not be changed
 testModeName|can be `jdbc`, `pgmex` or `all`; `jdbc` turns testing only for **Matlab Database Toolbox** working via a direct JDBC connection are tested,  `pgmex` – only for methods of [**PgMex library**](http://pgmex.alliedtesting.com), `all` runs tests for both connectors
 samplesMeshModeName| defines an algorithm used for generating a vector with different numbers of test data tuples used in each particular experiment, may be uniform or manual (see their description below)
 samplesMeshModeProps| parameters for all modes for generating a vector with different numbers of test data tuples used in each particular experiment (see below their description)
-nTrialsPerSample| number of trials for each single experiment to measure time of its execution (the final values are avarages across all trials)
+nTrialsPerSample| number of trials for each single experiment to measure time of its execution (the final values are averages across all trials)
 
 Please take into account that in case `testModeName` equals `jdbc` or `all` you need to have **Matlab Database Toolbox** installed,
 while in case `testModeName` equals `pgmex` or `all` you should have a non-trial version of [**PgMex library**](http://pgmex.alliedtesting.com) installed (see [here](http://pgmex.alliedtesting.com/#purchase) for details). Please note that a trial version cannot be used in a combination with this test pack. This is because without a license (or in case the license is not installed correctly) [**PgMex library**](http://pgmex.alliedtesting.com) works in *demo mode* which has a few limitations for an amount of data transferred to DB, a number of fields extracted and a number of sequential calls. These limitations can prevent execution of experiments when the limits are exceeded.
@@ -132,7 +132,7 @@ while in case `testModeName` equals `pgmex` or `all` you should have a non-trial
 Let us now describe each mode for generation of sample meshes determining volumes of data used in experiments. Each sample is determined by
 number of tuples for input test data. Test data values are taken from a special mat file (see the section
 "Experiment conditions for comparison between **Matlab Database Toolbox** and [**PgMex**](http://pgmex.alliedtesting.com)"
-[here](https://alliedtesting.github.io/pgmex-blog/2017-06-06-performance-comparison-of-postgresql-connectors-in-matlab-part-I/) if you are interested in understanding the nature of this data set). In case a required number of test data tuples exceeds the number of tuples in the
+[here](https://alliedtesting.github.io/pgmex-blog/2017/06/29/performance-comparison-of-postgresql-connectors-in-matlab-part-I/) if you are interested in understanding the nature of this data set). In case a required number of test data tuples exceeds the number of tuples in the
 mentioned mat file, this input data is simply replicated as many times as necessary to build a sufficiently large data set.
 
 
