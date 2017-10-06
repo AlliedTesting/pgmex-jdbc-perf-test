@@ -186,11 +186,11 @@ yLimVec| two-value vector with limits of y-axis, i.e. with minimal and maximal e
 legendLocation| location of legend, see help of the built-in function `"legend"` for details
 outputDataSize| may be true or false, if true (default), then data sizes (in Gb) are displayed on x-axis along with number of tuples
 
-Besides, `com.allied.pgmex.perftest.TestCompareWithJDBC.saveFigures` has two additional properties. The first one is named
+Besides, `com.allied.pgmex.perftest.TestCompareWithJDBC.saveFigures` has two additional properties. The first one is 
 `figureFormatList` with names of formats used for saving of figures, by default it is just `{'jpeg'}`, but many other formats
 including 'pdf', 'fig' as well as those accepted by the built-in `"saveas"` function may be used.
 The second property is `hFigVec`, it should be set by the output of `com.allied.pgmex.perftest.TestCompareWithJDBC.plot`. If
-this property is not given, all the necessary graphs are plotted automatically before saving. If `hFigVec` is given,
+this property is not given, all the necessary graphs are plotted automatically before saving. If `hFigVec` is set,
 the contents of already existing figures is to be exported to files. This property may be useful if you like to adjust these
 figures manually before saving.
 
