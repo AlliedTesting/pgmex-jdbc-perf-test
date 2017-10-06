@@ -38,7 +38,6 @@ elseif strcmpi(commandStr,'status')
 end
 switch lower(commandStr)
     case {'exec','pqexec'}
-        setdbprefs('DataReturnFormat','cellarray');
         varargout{1} = fetch(exec(varargin{:}));
     %case 'paramexec'
     case 'clear'
@@ -62,14 +61,28 @@ switch lower(commandStr)
     case 'binarytuples'
         varargout{1} = true;
     case 'getvalue'
-        curVal = varargin{1}.Data{varargin{2}+1,varargin{3}+1};
-        if isjava(curVal)
-            if ismethod(curVal,'getString')
-                curVal=getString(curVal);
-            elseif ismethod(curVal,'doubleValue')
-                curVal=doubleValue(curVal);
-            elseif ismethod(curVal,'toString')
-                curVal=toString(curVal);
+        if isnumeric(varargin{1}.Data)
+            curVal = varargin{1}.Data{varargin{2}+1,varargin{3}+1};
+        else
+            if iscell(varargin{1}.Data)
+                curVal = varargin{1}.Data{varargin{2}+1,varargin{3}+1};
+            else
+                colNameCVec = columnnames(varargin{1}, true);
+                curVal = ...
+                    varargin{1}.Data.(colNameCVec{varargin{3}+1})(...
+                    varargin{2}+1);
+                if iscell(curVal) && numel(curVal) == 1
+                    curVal = curVal{:};
+                end
+            end
+            if isjava(curVal)
+                if ismethod(curVal,'getString')
+                    curVal=getString(curVal);
+                elseif ismethod(curVal,'doubleValue')
+                    curVal=doubleValue(curVal);
+                elseif ismethod(curVal,'toString')
+                    curVal=toString(curVal);
+                end
             end
         end
         varargout{1} = curVal;

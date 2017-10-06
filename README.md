@@ -179,15 +179,20 @@ These methods have additional properties allowing to configure the way the resul
 
 Property Name                   | Property description
 --------------------------------|--------------
-filterFuncNameList| contains a cell array with values from `{'datainsert','fastinsert','batchParamExec'}`, enables displaying results only for methods listed in the cell (but only if are calculated)
+filterFuncNameList| contains a cell array with values from `{'datainsert','fastinsert','batchParamExec','fetch','getf'}`, enables displaying results only for methods listed in the cell (but only if are calculated)
 selfTimeMode| may be `only`, `on` and `off`, `only` means that only "pure" time used immediately for execution of the corresponding method is displayed, for `on` (default) this "pure" time is displayed along with total time including overhead expenses for data preparation before calling each method, `off` switches off displaying of "pure" time
 xLimVec| two-value vector with limits of x-axis, i.e. with minimal and maximal number of tuples to be displayed
 yLimVec| two-value vector with limits of y-axis, i.e. with minimal and maximal execution time to be displayed
 legendLocation| location of legend, see help of the built-in function `"legend"` for details
+outputDataSize| may be true or false, if true (default), then data sizes (in Gb) are displayed on x-axis along with number of tuples
 
-Besides, `com.allied.pgmex.perftest.TestCompareWithJDBC.saveFigures` has an additional property named `figureFormatList` with names of formats
-used for saving of figures, by default it is just `{'jpeg'}`, but many other formats including 'pdf', 'fig' as well as those
-accepted by the built-in `"saveas"` function may be used.
+Besides, `com.allied.pgmex.perftest.TestCompareWithJDBC.saveFigures` has two additional properties. The first one is named
+`figureFormatList` with names of formats used for saving of figures, by default it is just `{'jpeg'}`, but many other formats
+including 'pdf', 'fig' as well as those accepted by the built-in `"saveas"` function may be used.
+The second property is `hFigVec`, it should be set by the output of `com.allied.pgmex.perftest.TestCompareWithJDBC.plot`. If
+this property is not given, all the necessary graphs are plotted automatically before saving. If `hFigVec` is given,
+the contents of already existing figures is to be exported to files. This property may be useful if you like to adjust these
+figures manually before saving.
 
 In conclusion let us consider a couple of examples that demonstrate a usage of these properties:
 
