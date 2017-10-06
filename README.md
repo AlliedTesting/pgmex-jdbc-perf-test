@@ -180,7 +180,7 @@ These methods have additional properties allowing to configure the way the resul
 Property Name                   | Property description
 --------------------------------|--------------
 filterFuncNameList| contains a cell array with values from `{'datainsert','fastinsert','batchParamExec','fetch','getf'}`, enables displaying results only for methods listed in the cell (but only if are calculated)
-selfTimeMode| may be `only`, `on` and `off`, `only` means that only "pure" time used immediately for execution of the corresponding method is displayed, for `on` (default) this "pure" time is displayed along with total time including overhead expenses for data preparation before calling each method, `off` switches off displaying of "pure" time
+selfTimeMode| may be `only`, `on` and `off`, `only` means that only "pure" time used immediately for execution of the corresponding method is displayed, for `on` (default) this "pure" time is displayed along with total time including overhead expenses for data preparation (data processing for the case of retrieving) before (after) calling each method, `off` switches off displaying of "pure" time
 xLimVec| two-value vector with limits of x-axis, i.e. with minimal and maximal number of tuples to be displayed
 yLimVec| two-value vector with limits of y-axis, i.e. with minimal and maximal execution time to be displayed
 legendLocation| location of legend, see help of the built-in function `"legend"` for details
