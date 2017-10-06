@@ -3,8 +3,11 @@ PgMex-JDBC Performance Tests
 The test suite was developed to compare performance of [**PgMex library**](http://pgmex.alliedtesting.com) and of
 **Matlab Database Toolbox** working via a direct JDBC connection.
 
-Currently tests cover performance for different methods of inserting and types of data to be inserted. The results
-of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017/06/29/performance-comparison-of-postgresql-connectors-in-matlab-part-I/).
+Currently tests cover performance for different methods of inserting and types of data to be inserted as well as
+performance for retrieving of scalar data by several ways. The results
+of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017/06/29/performance-comparison-of-postgresql-connectors-in-matlab-part-I/)
+(inserting) and [here](https://alliedtesting.github.io/pgmex-blog/2017/09/29/performance-comparison-of-postgresql-connectors-in-matlab-part-II/)
+(retrieving of scalar data).
 
 Features
 ------------
@@ -115,7 +118,7 @@ purposes only). The table below contains a description of all these parameters.
 
 Parameter Name                   | Parameter description
 ---------------------------------|--------------
-maxExecTimeInSecs| maximal execution time in seconds for each particular insertion method that limits a total runtime for a method in question; Inf means "no restriction"
+maxExecTimeInSecs| maximal execution time in seconds for each particular insertion/retrieving method that limits a total runtime for a method in question; Inf means "no restriction"
 pathToSaveTestData|path for storing test experiment results into mat files (later it is possible to display these results by a desired way); if empty, current folder is used
 pathToSaveFigures| path for storing figures with graphs depicting results of test experiments; if empty, current folder is used
 raiseExceptionIfError| in case of an error during execution for some test raiseExceptionIfError=1 raises an exception thus stopping execution of current test; raiseExceptionIfError=0 displays a warning and tries to continue a test execution
