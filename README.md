@@ -7,7 +7,7 @@ Currently tests cover performance for different methods of inserting and types o
 performance for retrieving of scalar data and arrays by several ways. The results
 of experiments obtained through this suite can be seen [here](https://alliedtesting.github.io/pgmex-blog/2017/06/29/performance-comparison-of-postgresql-connectors-in-matlab-part-I/)
 (inserting), [here](https://alliedtesting.github.io/pgmex-blog/2017/09/29/performance-comparison-of-postgresql-connectors-in-matlab-part-II/)
-(retrieving of scalar data) and [here](https://alliedtesting.github.io/pgmex-blog/2017/10/18/performance-comparison-of-postgresql-connectors-in-matlab-part-3/)
+(retrieving of scalar data) and [here](https://alliedtesting.github.io/pgmex-blog/2017/10/18/performance-comparison-of-postgres-connectors-in-matlab-part-3/)
 (retrieving of arrays).
 
 Features
