@@ -38,8 +38,8 @@ elseif strcmpi(commandStr,'status')
 end
 switch lower(commandStr)
     case {'exec','pqexec'}
+        % varargout{1} = fetch(varargin{:}, 10);
         varargout{1} = fetch(exec(varargin{:}));
-    %case 'paramexec'
     case 'clear'
         close(varargin{1});
     case 'ntuples'

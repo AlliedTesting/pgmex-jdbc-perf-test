@@ -255,6 +255,18 @@ classdef ATestCompareWithJDBC < matlab.unittest.TestCase
                 {'fetch','getf'}),...
                 false,false,false,'structure');
         end
+        function self=compareRetrieveForArraysAsCellArray(self)
+            self.compareRetrieveInternal(...
+                self.filterRetrieveFuncNameList(...
+                {'fetch','getf'}),...
+                true,false,false,'cellarray');
+        end
+        function self=compareRetrieveForArraysAsStruct(self)
+            self.compareRetrieveInternal(...
+                self.filterRetrieveFuncNameList(...
+                {'fetch','getf'}),...
+                true,false,false,'structure');
+        end
     end
     methods (Access=protected)
         function setUpTestMode(self,testModeName)
@@ -633,7 +645,7 @@ classdef ATestCompareWithJDBC < matlab.unittest.TestCase
             if ~all(isFormatVec)
                 saveFuncList(~isFormatVec)={@saveOther};
             end
-            if ~isHFigVec,
+            if ~isHFigVec
                 hFigVec=feval([mfilename('class') '.plot'],...
                     reg{:});
             end
@@ -1439,6 +1451,7 @@ retrieveTime=NaN;
 isnError=true;
 convertResultsTime=NaN;
 selfRetrieveTime=NaN;
+dataSizeInBytes=Inf;
 %
 tStart=tic();
 % load parameters of test data
@@ -1452,9 +1465,14 @@ else
     nFields=size(SInputTestData.dataCMat,2);
     SInputTestData=rmfield(SInputTestData,{'dataCMat'});
 end
+isJDBC=strcmp(modeName,'jdbc');
 % get some necessary fields from SInputTestData
 fieldMapCMat=SInputTestData.fieldMapCMat;
-%testArrisays=SInputTestData.testArrays;
+testArrays=SInputTestData.testArrays;
+if isJDBC&&testArrays
+    isArrayFieldVec=~cellfun('isempty',fieldMapCMat(:,3));
+end
+isRetrieveAsStruct=strcmp(retrieveModeName,'structure');
 %
 dbConn=feval(execFunc,'connect',connInfoStr);
 %
@@ -1462,7 +1480,6 @@ fieldSpecStr=...
     mxberry.core.string.catwithsep(strcat('%',fieldMapCMat(:,2)),' ');
 indFieldCVec=num2cell(0:nFields-1);
 %
-isJDBC=strcmp(modeName,'jdbc');
 if isJDBC
     prevDRF=setdbprefs('DataReturnFormat');
     setdbprefs('DataReturnFormat',retrieveModeName);
@@ -1474,18 +1491,61 @@ if isJDBC
 end
 %
 prepareTime=toc(tStart);
+pgArrayClassName='org.postgresql.jdbc.PgArray';
+pgArrayClassNameLen=numel(pgArrayClassName);
 tStart=tic;
 try
     tSelfRetrieveStart=tic();
     res=feval(execFunc,'exec',dbConn,[...
         'SELECT * FROM ' tableName ' LIMIT ' num2str(nTuples)]);
+    clearRes=true;
     switch modeName
         case 'jdbc'
-            dataCMat=res.Data;
+            if isobject(res)||isjava(res)
+                dataCMat=res.Data;
+            else
+                dataCMat=res;
+                clearRes=false;
+            end
             selfRetrieveTime=toc(tSelfRetrieveStart);
             tConvertResultsStart=tic();
-            if strcmp(retrieveModeName,'structure')
-                dataCMat=struct2cell(dataCMat); %#ok<NASGU>
+            if isRetrieveAsStruct
+                dataCMat=struct2cell(dataCMat);
+            end
+            if testArrays
+                for iField=1:nFields
+                    if isArrayFieldVec(iField)
+                        if isRetrieveAsStruct
+                            fieldValVec=dataCMat{iField};
+                        else
+                            fieldValVec=dataCMat(:,iField);
+                        end
+                        isCell=iscell(fieldValVec);
+                        nElems=numel(fieldValVec);
+                        resFieldValCVec=cell(nElems,1);
+                        for iElem=1:nElems
+                            if isCell
+                                curVec=fieldValVec{iElem};
+                            else
+                                curVec=fieldValVec(iElem);
+                                while ~strncmp(class(curVec),...
+                                        pgArrayClassName,...
+                                        pgArrayClassNameLen)
+                                    curVec=curVec(1);
+                                end
+                            end
+                            curVec=cell(curVec.getArray());
+                            curVec=reshape(vertcat(curVec{:}),...
+                                size(curVec));
+                            resFieldValCVec{iElem}=curVec;
+                        end
+                        if isRetrieveAsStruct
+                            dataCMat{iField}=resFieldValCVec;
+                        else
+                            dataCMat(:,iField)=resFieldValCVec;
+                        end
+                    end
+                end
             end
             convertResultsTime=toc(tConvertResultsStart);
         case 'pgmex'
@@ -1521,7 +1581,9 @@ try
             mxberry.core.throwerror('wrongParams',...
                 'Unknown mode: %s',modeName);
     end
-    feval(execFunc,'clear',res);
+    if clearRes
+        feval(execFunc,'clear',res);
+    end
     retrieveTime=toc(tStart);
     feval(execFunc,'finish',dbConn);
     dataSizeInBytes=getfield(whos('dataCMat'),'bytes');
@@ -1564,7 +1626,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function outMat=replicateTuples(inpMat,nReplicates,nOutTuples)
 outMat=repmat(inpMat,nReplicates,1);
-outMat=outMat(1:nOutTuples,:);
+sizeVec=size(outMat);
+sizeVec(1)=nOutTuples;
+outMat=reshape(outMat(1:nOutTuples,:),sizeVec);
 end
 %
 function resizeTrajFigure(hObject,~,~)
