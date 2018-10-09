@@ -199,7 +199,7 @@ classdef ATestCompareWithJDBC < matlab.unittest.TestCase
         end
     end
     methods (TestMethodSetup, Abstract)
-        method_set_up(self,varargin)
+        method_set_up(self,testModeName)
     end
     methods
         function self = ATestCompareWithJDBC(varargin)

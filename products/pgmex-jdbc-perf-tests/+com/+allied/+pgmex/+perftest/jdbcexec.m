@@ -17,17 +17,18 @@ if nargin == 0
     return;
 end
 if strcmpi(commandStr,'connect')
+    inputCVec={};
     connStr = varargin{1};
     serverStr = getConnElement('host',connStr);
     portStr = getConnElement('port',connStr);
     if ~isempty(portStr)
-        serverStr = [serverStr ':' portStr];
+        inputCVec={'PortNumber',str2double(portStr)};
     end
     varargout{1} = database(...
         getConnElement('dbname',connStr),...
         getConnElement('user',connStr),...
         getConnElement('password',connStr),'Vendor','PostgreSQL',...
-        'Server',serverStr);
+        'Server',serverStr,inputCVec{:});
     return;
 elseif strcmpi(commandStr,'finish')
     close(varargin{1});
